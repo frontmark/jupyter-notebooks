@@ -1,4 +1,0 @@
-name: python 3.5
-dependencies:
-  - python=3.5
-  - numpy
