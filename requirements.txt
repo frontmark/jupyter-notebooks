@@ -1,7 +1,0 @@
-numpy
-pandas
-matplotlib
-sklearn
-jupyter_contrib_nbextensions
-ipywidgets
-pyvacon
