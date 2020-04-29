@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/frontmark/jupyter-notebooks/binder)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/frontmark/jupyter-notebooks/feature/binder)
 
 # Jupyter Notebooks
 
