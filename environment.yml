@@ -1,4 +1,12 @@
-name: python 3.5
+name: notebook_python_3.5
 dependencies:
   - python=3.5
   - numpy
+  - math
+  - matplotlib
+  - ipywidgets
+  - pandas
+  - random
+  - seaborn
+  - time
+  - mpl_toolkits
