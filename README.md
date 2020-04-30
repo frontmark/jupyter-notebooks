@@ -32,7 +32,7 @@ A variety of different derivative products from various asset classes are introd
 
 # Tribute
 
-Thanks to our sponsors [frontmark](https://www.frontmark.de/) and [RIVACON ](https://www.rivacon.com/).
+Thanks to our sponsors [frontmark](https://www.frontmark.de/) and [RIVACON](https://www.rivacon.com/).
 
 [<img src="images/favicon.png" width='70px'>](https://www.frontmark.de/)
 
