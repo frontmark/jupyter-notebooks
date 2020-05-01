@@ -14,6 +14,5 @@ dependencies:
   - seaborn=0.9.0
   - time=1.8
   - pip:
-    - pyvacon
-    - jupyter_contrib_nbextensions
-  
+    - pyvacon==0.9.0
+    - jupyter-contrib-nbextensions==0.5.1
