@@ -2,16 +2,16 @@ name: notebook_python_3.5
 
 dependencies:
   - python=3.5
-  - pyvacon
+  #- pyvacon
   - numpy
   - scipy
-  - math
-  - datetime
-  - dateutil
+  #- math
+  #- datetime
+  #- dateutil
   - matplotlib
   - ipywidgets
   - pandas
-  - random
+  #- random
   - seaborn
   - time
-  - mpl_toolkits
+  #- mpl_toolkits
