@@ -1,5 +1,5 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/frontmark/jupyter-notebooks/master)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![frontmark](https://img.shields.io/badge/powered%20by-frontmark-lightgrey.svg)](https://www.frontmark.de/)
 [![RIVACON](https://img.shields.io/badge/powered%20by-RIVACON-lightgrey.svg)](https://www.rivacon.com/en/)
 
