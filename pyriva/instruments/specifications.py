@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-#import numpy as np
+# import numpy as np
 import pyvacon.analytics as _analytics
 from datetime import datetime as _datetime
 from pyriva._converter import _add_converter
+from typing import List as _List
 
 InflationIndexForwardCurve = _add_converter(_analytics.InflationIndexForwardCurve)
 
 ComboSpecification = _add_converter(_analytics.ComboSpecification)
-#Equity/FX
+# Equity/FX
 PayoffStructure = _add_converter(_analytics.PayoffStructure)
 ExerciseSchedule = _add_converter(_analytics.ExerciseSchedule)
 BarrierDefinition = _add_converter(_analytics.BarrierDefinition)
@@ -27,8 +28,7 @@ AsianVanillaSpecification = _add_converter(_analytics.AsianVanillaSpecification)
 RiskControlStrategy = _add_converter(_analytics.RiskControlStrategy)
 AsianRiskControlSpecification = _add_converter(_analytics.AsianRiskControlSpecification)
 
-
-#Interest Rates
+# Interest Rates
 IrSwapLegSpecification = _add_converter(_analytics.IrSwapLegSpecification)
 IrFixedLegSpecification = _add_converter(_analytics.IrFixedLegSpecification)
 IrFloatLegSpecification = _add_converter(_analytics.IrFloatLegSpecification)
@@ -37,29 +37,93 @@ InterestRateBasisSwapSpecification = _add_converter(_analytics.InterestRateBasis
 DepositSpecification = _add_converter(_analytics.DepositSpecification)
 InterestRateFutureSpecification = _add_converter(_analytics.InterestRateFutureSpecification)
 
-
-
-#Bonds/Credit
+# Bonds/Credit
 CouponDescription = _add_converter(_analytics.CouponDescription)
 BondSpecification = _add_converter(_analytics.BondSpecification)
 
-def ZeroBondSpecification(obj_id: str, curr: str,  issue_date: _datetime, expiry: _datetime, notional: float = 100.0, 
-                        issuer: str = 'dummy_issuer', sec_level: str='NONE')->BondSpecification:
-    """[summary]
+
+def ZeroBondSpecification(obj_id: str, curr: str, issue_date: _datetime, expiry: _datetime,
+                          notional: float = 100.0, issuer: str = 'dummy_issuer', sec_level: str = 'NONE'
+                          ) -> BondSpecification:
+    """ Specifies zero coupon bonds by a minimal set of required information. The specification feeds into
+    pyvacon.analytics' general BondSpecification. A more extensive zero bond specification also allows for
+    the definition of issuer and securitization level.
 
     Args:
-        obj_id (str): [description]
-        curr (str): [description]
-        issue_date (_datetime): [description]
-        expiry (_datetime): [description]
-        notional (float, optional): [description]. Defaults to 100.0.
-        issuer (str, optional): [description]. Defaults to 'dummy_issuer'.
-        sec_level (str, optional): [description]. Defaults to 'NONE'.
+        obj_id (str): Unique zero bond identifier.
+        curr (str): Zero bond's currency (ISO 4217).
+        issue_date (_datetime): Zero bond's issue date.
+        expiry (_datetime): Zero bond's maturity date.
+        notional (float, optional): Zero bond's face value. Defaults to 100.0.
+        issuer (str, optional): Issuer of the zero bond. Defaults to 'dummy_issuer'.
+        sec_level (str, optional): Zero bond's securitization level. Defaults to 'NONE'.
 
     Returns:
-        BondSpecification: [description]
+        BondSpecification: The general bond specification for pyvacon including all relevant parameters for the
+        zero bond specification based on the function's arguments.
     """
-    return BondSpecification(obj_id, issuer, sec_level, curr, expiry, issue_date, notional, 'ACT365FIXED', [], [], '', [], [])
+    return BondSpecification(obj_id, issuer, sec_level, curr, expiry, issue_date, notional, 'ACT365FIXED',
+                             [], [], '', [], [])
+
+
+def FixedRateBondSpecification(obj_id: str, curr: str, issue_date: _datetime, expiry: _datetime,
+                               coupon_dates: _List[_datetime], coupons: _List[float], notional: float = 100.0,
+                               day_count: str = 'ACT365FIXED', issuer: str = 'dummy_issuer',
+                               sec_level: str = 'NONE') -> BondSpecification:
+    """ Specifies fixed rate bond by minimal set of required information. The specification feeds into
+    pyvacon.analytics' general BondSpecification. A more extensive fixed rate bond specification also allows
+    for the definition of issuer and securitization level.
+
+    Args:
+        obj_id (str): Unique fixed rate bond identifier.
+        curr (str): Fixed rate bond's currency (ISO 4217).
+        issue_date (_datetime): Fixed rate bond's issue date.
+        expiry (_datetime): Fixed rate bond's maturity date.
+        coupon_dates (_List[_datetime]): List of coupon payment dates.
+        coupons (_List[float]): List of annualized rates of each coupon.
+        notional (float, optional): Fixed rate bond's face value. Defaults to 100.0.
+        day_count (_datetime, optional): Day count convention method for coupon period length calculation.                               'ACT365FIXED'.
+                    Defaults to 'ACT365FIXED'.
+        issuer (str, optional): Issuer of the fixed rate bond. Defaults to 'dummy_issuer'.
+        sec_level (str, optional): Fixed rate bond's securitization level. Defaults to 'NONE'.
+
+    Returns:
+        BondSpecification: The general bond specification for pyvacon including all relevant parameters for the
+        fixed rate bond specification based on the function's arguments.
+    """
+    return BondSpecification(obj_id, issuer, sec_level, curr, expiry, issue_date, notional, day_count,
+                             coupon_dates, coupons, '', [], [])
+
+
+def FloatingRateBondSpecification(obj_id: str, curr: str, issue_date: _datetime, expiry: _datetime,
+                                  coupon_periods: _List[_datetime], spreads: _List[float],
+                                  reference_index: str = '', notional: float = 100.0,
+                                  day_count: str = 'ACT365FIXED', issuer: str = 'dummy_issuer',
+                                  sec_level: str = 'NONE') -> BondSpecification:
+    """ Specifies floating rate bond by minimal set of required information. The specification feeds into
+    pyvacon.analytics' general BondSpecification. A more extensive floating rate bond specification also
+    allows for the definition of issuer and securitization level.
+
+    Args:
+        obj_id (str): Unique floating rate bond identifier.
+        curr (str): Floating rate bond's currency (ISO 4217).
+        issue_date (_datetime): Floating rate bond's issue date.
+        expiry (_datetime): Floating rate bond's maturity date.
+        coupon_periods (_List[_datetime]: Accrual periods (start and end dates) for floating rate coupons.
+        spreads (_List[_datetime]): Add-on on top of floating rate determined by fixing of reference index.
+        reference_index (str, optional): Underlying of floating rate coupon rates. Defaults to ''.
+        notional (float, optional): Floating rate bond's face value. Defaults to 100.0.
+        day_count (_datetime, optional): Day count convention method for coupon period length calculation.
+                    Defaults to 'ACT365FIXED'.
+        issuer (str, optional): Issuer of the floating rate bond. Defaults to 'dummy_issuer'.
+        sec_level (str, optional): Fixed floating bond's securitization level. Defaults to 'NONE'.
+
+    Returns:
+        BondSpecification: The general bond specification for pyvacon including all relevant parameters for the
+        floating rate bond specification based on the function's arguments.
+    """
+    return BondSpecification(obj_id, issuer, sec_level, curr, expiry, issue_date, notional, day_count,
+                             [], [], reference_index, coupon_periods, spreads)
 
 
 InflationLinkedBondSpecification = _add_converter(_analytics.InflationLinkedBondSpecification)
@@ -75,5 +139,4 @@ vectorCouponDescription = _analytics.vectorCouponDescription
 vectorRainbowBarrierSpec = _analytics.vectorRainbowBarrierSpec
 vectorRainbowUdlSpec = _analytics.vectorRainbowUdlSpec
 
-#ProjectToCorrelation = _analytics.ProjectToCorrelation
-
+# ProjectToCorrelation = _analytics.ProjectToCorrelation
